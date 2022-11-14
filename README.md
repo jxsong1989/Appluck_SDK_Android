@@ -1,11 +1,11 @@
-Appluck Android 插件集成说明
+Appluck Android SDK集成说明
 =========
 
 
 
 使用要求
 --------
-minSdk 21(android5)以上
+MinSdk 21 (Android 5.0)以上
 
 ## 1.下载AppluckSDK
  [AppLuckSDK.aar][alup]
@@ -89,7 +89,7 @@ AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
 
 4.1.2 初始化
 
-  ```c#
+  ```java
 //请在主线程中进行
 //placementId - 广告位ID 插件会自动对该位置做预加载，如产品中有多个广告位建议传入最重要即预期曝光最多的广告位ID。生产环境的placementId请与运营人员联系获取。
 AppLuckSDK.init(placementId);
@@ -151,7 +151,7 @@ AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
             @Override
             public void onInitFailed(Error error) {
                 Log.e("AppLuckSDK", "Init Failed.", error);
-                Toast.makeText(MyApplication.this, "AppLuck SDK Init Failed.", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(MyApplication.this, "AppLuck SDK Init Failed.", Toast.LENGTH_SHORT).show();
             }
 	    //AppLcuk互动页面关闭事件
             @Override
@@ -159,13 +159,13 @@ AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
 
             }
 	    
-            //用户互动回调 - 此事件非全量开发，若有需求请提前与Appluck对接人员沟通
+            //用户互动回调 - 此事件非全量开放，若有需求请提前与Appluck对接人员沟通
 	    //interaction 
 	    //	INTERACTIVE_PLAY 活动参与
 	    //	INTERACTIVE_CLICK 广告点击
             @Override
             public void onUserInteraction(String placementId, String interaction) {
-                Toast.makeText(MyApplication.this, placementId + " " + interaction, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(MyApplication.this, placementId + " " + interaction, Toast.LENGTH_SHORT).show();
             }
         });
 ```
