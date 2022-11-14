@@ -45,11 +45,6 @@ dependencies {
 
    * 将libs.zip解压，内容全部放入 Assets/Plugins/Android
 
-启用Jetifier和AndroidX,在gradleTemplate.properties中添加以下内容:
-  ```
-  android.useAndroidX=true
-  android.enableJetifier=true 
-  ```
 
 ## 4. 开始集成
 
@@ -57,18 +52,46 @@ dependencies {
 
 4.1.1 填充初始化成功回调.
 
-  ```c#
-AppLuckEvents.onInitSuccessEvent += () =>{
-  //Appluck SDK 初始化成功
-  //可以开始设置广告位入口
-}
+  ```java
+AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
+            @Override
+            public void onInitSuccess() {
+                Toast.makeText(MyApplication.this, "AppLuck SDK Init Success.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onInitFailed(Error error) {
+                Log.e("AppLuckSDK", "Init Failed.", error);
+                Toast.makeText(MyApplication.this, "AppLuck SDK Init Failed.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPlacementLoadSuccess(String placementId) {
+                Toast.makeText(MyApplication.this, placementId + " Load Success.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPlacementClose() {
+
+            }
+
+            /**
+             *
+             * @param placementId
+             * @param interaction INTERACTIVE_PLAY 活动参与; INTERACTIVE_CLICK 广告点击
+             */
+            @Override
+            public void onUserInteraction(String placementId, String interaction) {
+                Toast.makeText(MyApplication.this, placementId + " " + interaction, Toast.LENGTH_SHORT).show();
+            }
+        });
   ```
 
 4.1.2 初始化
 
   ```c#
 //placementId - 广告位ID 插件会自动对该位置做预加载，如产品中有多个广告位建议传入最重要即预期曝光最多的广告位ID。生产环境的placementId请与运营人员联系获取。
-AppLuck.instance.init(placementId);
+AppLuckSDK.init(placementId);
   ```
 
 ### 4.2 设置广告位入口
@@ -84,26 +107,26 @@ Appluck支持两种方式的广告位入口
 
 1. 填充placement加载成功回调
 
-  ```c#
-//loadedPlacementId - 加载成功的placementId
-AppLuckEvents.onPlacementLoadSuccessEvent += (loadedPlacementId) =>{
-  //placement 加载成功，showPlacement素材
-  if (loadedPlacementId == placementId)
-  {
-      //将placement入口素材显示在指定坐标
-      AppLuck.instance.showInteractiveEntrance(loadedPlacementId, Screen.height - 800, Screen.width - 600);
-  }
-}
+  ```java
+AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
+	    //loadedPlacementId - 加载成功的placementId
+            @Override
+            public void onPlacementLoadSuccess(String placementId) {
+                Toast.makeText(MyApplication.this, placementId + " Load Success.", Toast.LENGTH_SHORT).show();
+            }
+        });
   ```
 
 2. 加载placement素材
 
-  ```c#
+  ```java
 //placementId - 广告位id
 //creative type - 素材类型，当前仅支持 icon
 //width - 入口位置的素材宽度
 //height - 入口位置的素材高度
-AppLuck.instance.loadPlacement(placementId, "icon", 200, 200);
+if(AppLuckSDK.isSDKInit()){
+	AppLuckSDK.loadPlacement(placementId, "icon", 150, 150);
+}
   ```
 
 
@@ -112,38 +135,38 @@ AppLuck.instance.loadPlacement(placementId, "icon", 200, 200);
 
 - 直接打开互动广告的场景请直接调用
 
-```c#
-AppLuck.instance.openInteractiveAds(请传入placementId);
+```java
+if(AppLuckSDK.isSDKInit()){
+	AppLuckSDK.openInteractiveAds(请传入placementId);
+}
 ```
 
 - 自行设置入口，等待Appluck预加载完成再展示
 
-```c#
-//游戏初始化时默认隐藏入口素材游戏对象placement
-placement.gameObject.SetActive(false);
-
-//placement绑定点击事件
-placement.onClick.AddListener(() =>
-{
-    //唤起webview并加载活动，请传入placementId
-    AppLuck.instance.openInteractiveAds(请传入placementId);
-});
-
-//在SDK初始化成功的回调中显示placement
-AppLuckEvents.onInitSuccessEvent += () =>{
-    placement.gameObject.SetActive(true);
-}
-```
-
 ### 4.3 其他事件
-```c#
-//用户互动回调 - 此事件非全量开发，若有需求请提前与Appluck对接人员沟通
-//interaction 
-//	INTERACTIVE_PLAY 活动参与
-//	INTERACTIVE_CLICK 广告点击
-AppLuckEvents.onUserInteractionEvent += (placementId, interaction) =>{
-	toast(placementId + "  " + interaction);
-};
+```java
+AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
+	    //SDKInit 失败	
+            @Override
+            public void onInitFailed(Error error) {
+                Log.e("AppLuckSDK", "Init Failed.", error);
+                Toast.makeText(MyApplication.this, "AppLuck SDK Init Failed.", Toast.LENGTH_SHORT).show();
+            }
+	    //AppLcuk互动页面关闭事件
+            @Override
+            public void onPlacementClose() {
+
+            }
+	    
+            //用户互动回调 - 此事件非全量开发，若有需求请提前与Appluck对接人员沟通
+	    //interaction 
+	    //	INTERACTIVE_PLAY 活动参与
+	    //	INTERACTIVE_CLICK 广告点击
+            @Override
+            public void onUserInteraction(String placementId, String interaction) {
+                Toast.makeText(MyApplication.this, placementId + " " + interaction, Toast.LENGTH_SHORT).show();
+            }
+        });
 ```
 
 [alup]: https://github.com/jxsong1989/appluck_intergration_guide_sdk_android/releases/tag/v1.0.1
