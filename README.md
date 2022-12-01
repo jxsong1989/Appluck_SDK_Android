@@ -17,7 +17,6 @@ MinSdk 21 (Android 5.0)以上
 ```groovy
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-  implementation files('libs/tenjin.aar')
 }
 ```
 
