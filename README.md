@@ -137,7 +137,12 @@ if(AppLuckSDK.isSDKInit()){
 
 ```java
 if(AppLuckSDK.isSDKInit()){
-	AppLuckSDK.openInteractiveAds(请传入placementId);
+    //唤起webview并加载活动，请传入placementId
+    //mode 
+    //-- 0.默认模式: 适合固定入口场景如浮标banner等，用户可以自由关闭互动广告界面。
+    //-- 1.插屏模式: 适合插屏场景，用户进入10秒后才可关闭。
+    //-- 2.激励模式: 适合激励场景，用户完成3次活动参与后可关闭互动广告界面，关闭界面时触发激励回调。
+    AppLuckSDK.openInteractiveAds(请传入placementId, mode);
 }
 ```
 
@@ -152,21 +157,15 @@ AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
                 Log.e("AppLuckSDK", "Init Failed.", error);
                 // Toast.makeText(MyApplication.this, "AppLuck SDK Init Failed.", Toast.LENGTH_SHORT).show();
             }
-	    //AppLcuk互动页面关闭事件
-            @Override
-            public void onPlacementClose() {
-
-            }
 	    
-            //用户互动回调 - 此事件非全量开放，若有需求请提前与Appluck对接人员沟通
-	    //interaction 
-	    //	INTERACTIVE_PLAY 活动参与
-	    //	INTERACTIVE_CLICK 广告点击
-            @Override
-            public void onUserInteraction(String placementId, String interaction) {
-                // Toast.makeText(MyApplication.this, placementId + " " + interaction, Toast.LENGTH_SHORT).show();
+	    //AppLuck 关闭回调
+	    //status 0:普通关闭;1:已完成激励任务
+	    @Override
+            public void onInteractiveAdsHidden(String placementId, int i) {
+                
             }
+    
         });
 ```
 
-[alup]: https://github.com/jxsong1989/appluck_intergration_guide_sdk_android/releases/tag/v1.0.1
+[alup]: https://github.com/jxsong1989/appluck_intergration_guide_sdk_android/releases/tag/v1.1.0
