@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     private final static Handler HANDLER = new Handler();
 
+    private Button btnOpen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +34,19 @@ public class MainActivity extends AppCompatActivity {
             final Intent intent = new Intent(this, MainActivity2.class);
             startActivity(intent);
         });
-
+        btnOpen = findViewById(R.id.btn_open);
+        btnOpen.setOnClickListener((v) -> {
+            //插屏打开
+            AppLuckSDK.openInteractiveAds(MyApplication.APPLUCK_PLACEMENT_ID, 1);
+        });
+        btnOpen.setVisibility(View.GONE);
         showAppLuckPlacement();
     }
 
     public void showAppLuckPlacement() {
         if (AppLuckSDK.isPlacementReady(MyApplication.APPLUCK_PLACEMENT_ID)) {
             AppLuckSDK.showInteractiveEntrance(this, MyApplication.APPLUCK_PLACEMENT_ID, 600, 600);
+            btnOpen.setVisibility(View.VISIBLE);
             return;
         }
         HANDLER.postDelayed(() -> {

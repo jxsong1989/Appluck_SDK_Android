@@ -34,7 +34,12 @@ public class MyApplication extends Application {
             }
 
             @Override
-            public void onPlacementClose() {
+            public void onInteractiveAdsHidden(String s, int i) {
+                
+            }
+
+            @Override
+            public void onInteractiveAdsDisplayed(String s) {
 
             }
 
