@@ -128,6 +128,18 @@ if(AppLuckSDK.isSDKInit()){
 	AppLuckSDK.loadPlacement(placementId, "icon", 150, 150);
 }
   ```
+3. 展示广告位，在预加载场景下请定时执行以下代码直到广告位成功展示，具体实现可以参考[demo][demo]。
+  ```java
+if(AppLuckSDK.isSDKInit()){
+	if (AppLuckSDK.isPlacementReady(placementId)) {
+		//this: 当前Activity
+		//placementId
+		//top: y坐标
+		//left: x坐标
+		AppLuckSDK.showInteractiveEntrance(this, placementId, top, left);
+	}
+}
+  ```
 
 
 
@@ -169,3 +181,4 @@ AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
 ```
 
 [alup]: https://github.com/jxsong1989/appluck_intergration_guide_sdk_android/releases/tag/v1.1.0
+[demo]: https://github.com/jxsong1989/appluck_intergration_guide_sdk_android/blob/master/app/src/main/java/com/example/appluck_intergration_guide_sdk_android/MainActivity.java
