@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         btnOpen = findViewById(R.id.btn_open);
         btnOpen.setOnClickListener((v) -> {
             //插屏打开
-            AppLuckSDK.openInteractiveAds(MyApplication.APPLUCK_PLACEMENT_ID, 1);
+            AppLuckSDK.openInteractiveAds(MyApplication.APPLUCK_PLACEMENT_ID, 1, 1);
         });
         btnOpen.setVisibility(View.GONE);
         showAppLuckPlacement();
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void showAppLuckPlacement() {
         if (AppLuckSDK.isPlacementReady(MyApplication.APPLUCK_PLACEMENT_ID)) {
-            AppLuckSDK.showInteractiveEntrance(this, MyApplication.APPLUCK_PLACEMENT_ID, 600, 600);
+            AppLuckSDK.showInteractiveEntrance(this, MyApplication.APPLUCK_PLACEMENT_ID, 600, 600, 1);
             btnOpen.setVisibility(View.VISIBLE);
             return;
         }
