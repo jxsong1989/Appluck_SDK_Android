@@ -180,5 +180,5 @@ AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
         });
 ```
 
-[alup]: https://github.com/jxsong1989/appluck_intergration_guide_sdk_android/releases/tag/v1.1.0
+[alup]: https://github.com/jxsong1989/appluck_intergration_guide_sdk_android/releases/tag/v1.2.0
 [demo]: https://github.com/jxsong1989/appluck_intergration_guide_sdk_android/blob/master/app/src/main/java/com/example/appluck_intergration_guide_sdk_android/MainActivity.java
