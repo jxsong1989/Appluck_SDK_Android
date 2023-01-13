@@ -70,7 +70,12 @@ AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
             }
 
             @Override
-            public void onPlacementClose() {
+            public void onInteractiveAdsHidden(String s, int i) {
+                
+            }
+	    
+	    @Override
+            public void onInteractiveAdsDisplayed(String s) {
 
             }
 
@@ -136,7 +141,8 @@ if(AppLuckSDK.isSDKInit()){
 		//placementId
 		//top: y坐标
 		//left: x坐标
-		AppLuckSDK.showInteractiveEntrance(this, placementId, top, left);
+		//times: 默认传1
+		AppLuckSDK.showInteractiveEntrance(this, placementId, top, left, times);
 	}
 }
   ```
@@ -149,12 +155,22 @@ if(AppLuckSDK.isSDKInit()){
 
 ```java
 if(AppLuckSDK.isSDKInit()){
+    //两个方法二选一使用
     //唤起webview并加载活动，请传入placementId
     //mode 
     //-- 0.默认模式: 适合固定入口场景如浮标banner等，用户可以自由关闭互动广告界面。
     //-- 1.插屏模式: 适合插屏场景，用户进入10秒后才可关闭。
-    //-- 2.激励模式: 适合激励场景，用户完成3次活动参与后可关闭互动广告界面，关闭界面时触发激励回调。
+    //-- 2.激励模式: 适合激励场景，用户完成1次活动参与后可关闭互动广告界面，关闭界面时触发激励回调。
     AppLuckSDK.openInteractiveAds(请传入placementId, mode);
+
+    //唤起webview并加载活动，请传入placementId
+    //mode 
+    //-- 0.默认模式: 适合固定入口场景如浮标banner等，用户可以自由关闭互动广告界面。
+    //-- 1.插屏模式: 适合插屏场景，用户进入10秒后才可关闭。
+    //-- 2.激励模式: 适合激励场景，用户完成{times}次活动参与后可关闭互动广告界面，关闭界面时触发激励回调。
+    //times
+    //-- 当mode为2(激励模式)时用于限制用户需要完成的活动参与次数。
+    AppLuckSDK.openInteractiveAds(请传入placementId, mode, times);
 }
 ```
 
@@ -180,5 +196,5 @@ AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
         });
 ```
 
-[alup]: https://github.com/jxsong1989/appluck_intergration_guide_sdk_android/releases/tag/v1.1.0
+[alup]: https://github.com/jxsong1989/appluck_intergration_guide_sdk_android/releases/tag/v1.2.0
 [demo]: https://github.com/jxsong1989/appluck_intergration_guide_sdk_android/blob/master/app/src/main/java/com/example/appluck_intergration_guide_sdk_android/MainActivity.java
