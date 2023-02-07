@@ -19,6 +19,11 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 }
 ```
+4. 在你的 Android Studio 项目的 app 模块，选择 AndroidManifest.xml 文件，确保以下添加到 manifest block 中：
+```xml
+ <uses-permission android:name="android.permission.INTERNET" />
+ <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+```
 
 ## 3. 配置依赖
 可通过以下两种方式引入，任选其一
