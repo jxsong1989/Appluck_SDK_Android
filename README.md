@@ -160,14 +160,6 @@ if(AppLuckSDK.isSDKInit()){
 
 ```java
 if(AppLuckSDK.isSDKInit()){
-    //两个方法二选一使用
-    //唤起webview并加载活动，请传入placementId
-    //mode 
-    //-- 0.默认模式: 适合固定入口场景如浮标banner等，用户可以自由关闭互动广告界面。
-    //-- 1.插屏模式: 适合插屏场景，用户进入10秒后才可关闭。
-    //-- 2.激励模式: 适合激励场景，用户完成1次活动参与后可关闭互动广告界面，关闭界面时触发激励回调。
-    AppLuckSDK.openInteractiveAds(请传入placementId, mode);
-
     //唤起webview并加载活动，请传入placementId
     //mode 
     //-- 0.默认模式: 适合固定入口场景如浮标banner等，用户可以自由关闭互动广告界面。
