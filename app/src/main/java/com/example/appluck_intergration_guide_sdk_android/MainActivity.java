@@ -40,6 +40,16 @@ public class MainActivity extends AppCompatActivity {
             AppLuckSDK.openInteractiveAds(MyApplication.APPLUCK_PLACEMENT_ID, 1, 1);
         });
         btnOpen.setVisibility(View.GONE);
+        final Button btnShow = findViewById(R.id.btn_show);
+        btnShow.setOnClickListener((v) -> {
+            //APPLUCK show
+            AppLuckSDK.showInteractiveEntrance(this, MyApplication.APPLUCK_PLACEMENT_ID, 600, 600, 1);
+        });
+        final Button btnHide = findViewById(R.id.btn_hide);
+        btnHide.setOnClickListener((v) -> {
+            //APPLUCK hide
+            AppLuckSDK.hideInteractiveEntrance(this,MyApplication.APPLUCK_PLACEMENT_ID);
+        });
         showAppLuckPlacement();
     }
 
