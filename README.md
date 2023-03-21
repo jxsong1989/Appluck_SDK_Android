@@ -151,7 +151,13 @@ if(AppLuckSDK.isSDKInit()){
 	}
 }
   ```
+4. 隐藏placement
 
+ ```c#
+//activity - 入口所在的activity
+//placementId - 广告位id
+AppLuckSDK.hideInteractiveEntrance(activity,placementId);
+  ```
 
 
 #### 4.2.2 自行设置入口
