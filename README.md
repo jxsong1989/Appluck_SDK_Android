@@ -140,6 +140,7 @@ if(AppLuckSDK.isSDKInit()){
   ```
 3. 展示广告位，在预加载场景下请定时执行以下代码直到广告位成功展示，具体实现可以参考[demo][demo]。
   ```java
+//指定坐标(像素)展示
 if(AppLuckSDK.isSDKInit()){
 	if (AppLuckSDK.isPlacementReady(placementId)) {
 		//this: 当前Activity
@@ -148,6 +149,17 @@ if(AppLuckSDK.isSDKInit()){
 		//left: x坐标
 		//times: 默认传1
 		AppLuckSDK.showInteractiveEntrance(this, placementId, top, left, times);
+	}
+}
+
+//或获取view自行展示
+if(AppLuckSDK.isSDKInit()){
+	if (AppLuckSDK.isPlacementReady(placementId)) {
+		//this: 当前Activity
+		//placementId
+		//times: 默认传1
+		View iconView = AppLuckSDK.showInteractiveEntrance(this, placementId, 1);
+		//todo 展示iconView
 	}
 }
   ```
