@@ -152,14 +152,23 @@ if(AppLuckSDK.isSDKInit()){
 	}
 }
 
-//或获取view自行展示
+//获取view自行展示
 if(AppLuckSDK.isSDKInit()){
 	if (AppLuckSDK.isPlacementReady(placementId)) {
+		LinearLayout llAddView = "{your Layout}";
 		//this: 当前Activity
 		//placementId
 		//times: 默认传1
 		View iconView = AppLuckSDK.showInteractiveEntrance(this, placementId, 1);
-		//todo 展示iconView
+		//展示iconView
+		if (iconView != null) {
+			if (iconView.getParent() != null) {
+			    ViewGroup viewGroup = (ViewGroup) iconView.getParent();
+			    viewGroup.removeView(iconView);
+			}
+			iconView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+			llAddView.addView(iconView);
+		}
 	}
 }
   ```
