@@ -6,12 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:id="@+id/ll_add_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_height="150dp"
+        tools:layout_width="150dp"
+        android:layout_margin="20dp"
+        android:orientation="vertical" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="SDK Demo"
+        android:layout_marginTop="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,40 +31,65 @@
         android:id="@+id/btn_activity2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:text="activity2"
+        android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView" />
 
     <Button
         android:id="@+id/btn_open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="10dp"
         android:text="openAppLuck"
+        android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_activity2" />
 
     <Button
         android:id="@+id/btn_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="20dp"
-        android:text="showAppLuck"
+        android:layout_marginTop="10dp"
+        android:text="showAppLuck-ID1"
+        android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_hide"
         app:layout_constraintTop_toBottomOf="@+id/btn_open" />
 
     <Button
         android:id="@+id/btn_hide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="20dp"
-        android:text="hideAppLuck"
+        android:text="hideAppLuck-ID1"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toEndOf="@id/btn_show"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_show" />
+
+    <Button
+        android:id="@+id/btn_show2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="showAppLuck-ID2"
+        android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_show" />
+        app:layout_constraintEnd_toStartOf="@id/btn_hide2"
+        app:layout_constraintTop_toBottomOf="@+id/btn_hide" />
+
+    <Button
+        android:id="@+id/btn_hide2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hideAppLuck-ID2"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toEndOf="@id/btn_show2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_show2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
