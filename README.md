@@ -6,7 +6,7 @@ Appluck Android SDK集成说明
 
 使用要求
 --------
-MinSdk 21 (Android 5.0)以上
+MinSDK 21 (Android 5.0)以上
 
 ## 1.下载AppluckSDK
  [AppLuckSDK.aar][alup]
