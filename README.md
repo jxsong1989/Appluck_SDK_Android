@@ -1,6 +1,7 @@
 Appluck Android SDK集成说明
 =========
-
+[Github地址](https://github.com/jxsong1989/Appluck_SDK_Android)
+<br/>
 
 
 使用要求
