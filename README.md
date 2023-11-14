@@ -1,9 +1,8 @@
 # Appluck Android SDK Integration Guide
-=========
 
 [中文](https://github.com/jxsong1989/Appluck_SDK_Android/blob/master/README-CN.md)
 <br/>
-<br/>
+
 [GitHub Repository](https://github.com/jxsong1989/Appluck_SDK_Android)
 <br/>
 
