@@ -1,63 +1,67 @@
-Appluck Android SDK集成说明
+# Appluck Android SDK Integration Guide
 =========
-[Github地址](https://github.com/jxsong1989/Appluck_SDK_Android)
+
+[中文](https://github.com/jxsong1989/Appluck_SDK_Android/blob/master/README-CN.md)
+<br/>
+<br/>
+[GitHub Repository](https://github.com/jxsong1989/Appluck_SDK_Android)
 <br/>
 
 
-使用要求
+Requirements
 --------
-MinSDK 21 (Android 5.0)以上
+MinSDK 21 (Android 5.0) and above
 
-## 1.下载AppluckSDK
+## 1. Download Appluck SDK
  [AppLuckSDK.aar][alup]
 
-## 2. 引入SDK
-1. 在 Android Studio 里的 Project Navigator， 选择 Project，你将在 Android Studio project 里的 app 模块下看到 libs 文件夹 。
-2. 你需要将 AppLuckSDK.aar 文件添加到 libs 文件夹中。
-3. 在你的 Android Studio 项目的 app 模块，选择 build.gradle 文件，确保将以下添加到 dependencies block 中：
+## 2. Integrate the SDK
+1. In the Android Studio Project Navigator, select Project. You will see the libs folder in the app module of your Android Studio project.
+2. Add the AppLuckSDK.aar file to the libs folder.
+3. In the build.gradle file of your app module, make sure to add the following to the dependencies block:
 ```groovy
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 }
 ```
-4. 在你的 Android Studio 项目的 app 模块，选择 AndroidManifest.xml 文件，确保以下添加到 manifest block 中：
+4. In the AndroidManifest.xml file of your app module, make sure to add the following to the manifest block:
 ```xml
  <uses-permission android:name="android.permission.INTERNET" />
  <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 ```
 
-## 3. 配置依赖
-可通过以下两种方式引入，任选其一
+## 3. Configure Dependencies
+You can include dependencies in either of the following ways, choose one:
 
-* 通过gradle引入
+* Using Gradle
 
   ```groovy
   implementation 'androidx.appcompat:appcompat:1.3.0'
   implementation 'com.google.android.material:material:1.4.0'
-  //常用工具
+  // Common utilities
   implementation 'org.apache.commons:commons-lang3:3.3.2'
-  //http请求
+  // HTTP requests
   implementation 'org.jsoup:jsoup:1.11.2'
-  //json处理
+  // JSON processing
   implementation 'com.alibaba:fastjson:1.1.72.android'
-  //图片加载缓存
+  // Image loading and caching
   implementation 'com.github.bumptech.glide:glide:4.14.2'
-  //gaid
+  // Google Advertising ID (GAID)
   implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
   ```
 
- * 手动引入
+ * Manual Integration
 
-   * 将libs.zip解压，内容全部放入 Assets/Plugins/Android
+   * Unzip libs.zip and place all contents into Assets/Plugins/Android
 
 
-## 4. 开始集成
+## 4. Start Integration
 
-### 4.1 初始化SDK
+### 4.1 Initialize SDK
 
-4.1.1 填充初始化成功回调.
+#### 4.1.1 Fill in the Initialization Success Callback.
 
-  ```java
+```java
 AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
             @Override
             public void onInitSuccess() {
@@ -97,30 +101,31 @@ AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
         });
   ```
 
-4.1.2 初始化
+### 4.1.2 Initialization
 
-  ```java
-//请在主线程中进行
-//placementId - 广告位ID 插件会自动对该位置做预加载，如产品中有多个广告位建议传入最重要即预期曝光最多的广告位ID。生产环境的placementId请与运营人员联系获取。
+```java
+// Please run on the main thread
+// placementId - Ad placement ID. The plugin will automatically preload this location. If there are multiple ad placements in the product, it is recommended to pass in the ID of the most important one, i.e., the one with the highest expected exposure.
+// Contact your operations team to obtain the production environment placementId.
 AppLuckSDK.init(placementId);
   ```
 
-### 4.2 设置广告位入口
+### 4.2 Set up Ad Placement Entrance
 
-Appluck支持两种方式的广告位入口
+Appluck supports two methods of ad placement entrance:
 
-- 使用封装好的方法加载入口(建议使用)
-  - 只需传入入口的宽高及位置即可展示，Appluck将会对素材做系统推荐并根据点击率实时优化
-- 自行设置入口(适合对入口有特殊要求，或在某些场景希望直接打开互动广告的需求)
-  - 希望打开互动广告时，调用我们提供的方法打开Appluck的活动页面。
+- Use the encapsulated method to load the entrance (recommended)
+  - Simply provide the width, height, and position of the entrance for display. Appluck will recommend materials based on the system and optimize them in real-time based on click-through rates.
+- Set up the entrance manually (suitable for cases where there are special requirements for the entrance, or in some scenarios where you want to directly open interactive ads)
+  - When you want to open interactive ads, call our provided method to open Appluck's activity page.
 
-#### 4.2.1 使用Appluck封装的入口
+#### 4.2.1 Use Appluck's Encapsulated Entrance
 
-1. 填充placement加载成功回调
+1. Fill in the placement loading success callback
 
   ```java
 AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
-	    //loadedPlacementId - 加载成功的placementId
+	    //loadedPlacementId - Successfully loaded placementId
             @Override
             public void onPlacementLoadSuccess(String placementId) {
                 Toast.makeText(MyApplication.this, placementId + " Load Success.", Toast.LENGTH_SHORT).show();
@@ -128,97 +133,99 @@ AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
         });
   ```
 
-2. 加载placement素材
+2. Load Placement Material
 
   ```java
-//placementId - 广告位id
-//creative type - 素材类型，当前仅支持 icon
-//width - 入口位置的素材宽度
-//height - 入口位置的素材高度
-if(AppLuckSDK.isSDKInit()){
-	AppLuckSDK.loadPlacement(placementId, "icon", 150, 150);
+// placementId - Ad placement id
+// creative type - Material type, currently only supports icon
+// width - Material width at the entrance position
+// height - Material height at the entrance position
+if (AppLuckSDK.isSDKInit()) {
+    AppLuckSDK.loadPlacement(placementId, "icon", 150, 150);
 }
   ```
-3. 展示广告位，在预加载场景下请定时执行以下代码直到广告位成功展示，具体实现可以参考[demo][demo]。
-  ```java
-//指定坐标(像素)展示
-if(AppLuckSDK.isSDKInit()){
-	if (AppLuckSDK.isPlacementReady(placementId)) {
-		//this: 当前Activity
-		//placementId
-		//top: y坐标
-		//left: x坐标
-		//times: 默认传1
-		AppLuckSDK.showInteractiveEntrance(this, placementId, top, left, times);
-	}
-}
 
-//获取view自行展示
-if(AppLuckSDK.isSDKInit()){
-	if (AppLuckSDK.isPlacementReady(placementId)) {
-		LinearLayout llAddView = "{your Layout}";
-		//this: 当前Activity
-		//placementId
-		//times: 默认传1
-		View iconView = AppLuckSDK.showInteractiveEntrance(this, placementId, 1);
-		//展示iconView
-		if (iconView != null) {
-			if (iconView.getParent() != null) {
-			    ViewGroup viewGroup = (ViewGroup) iconView.getParent();
-			    viewGroup.removeView(iconView);
-			}
-			iconView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-			llAddView.addView(iconView);
-		}
-	}
-}
-  ```
-4. 隐藏placement
-
- ```c#
-//activity - 入口所在的activity
-//placementId - 广告位id
-AppLuckSDK.hideInteractiveEntrance(activity,placementId);
-  ```
-
-
-#### 4.2.2 自行设置入口
-
-- 直接打开互动广告的场景请直接调用
+3. Display the ad placement. In a preloading scenario, execute the following code periodically until the ad placement is successfully displayed. You can refer to the [demo][demo] for specific implementation.
 
 ```java
-if(AppLuckSDK.isSDKInit()){
-    //唤起webview并加载活动，请传入placementId
-    //mode 
-    //-- 0.默认模式: 适合固定入口场景如浮标banner等，用户可以自由关闭互动广告界面。
-    //-- 1.插屏模式: 适合插屏场景，用户进入10秒后才可关闭。
-    //-- 2.激励模式: 适合激励场景，用户完成{times}次活动参与后可关闭互动广告界面，关闭界面时触发激励回调。
-    //times
-    //-- 当mode为2(激励模式)时用于限制用户需要完成的活动参与次数。
-    AppLuckSDK.openInteractiveAds(请传入placementId, mode, times);
+// Display at specified coordinates (pixels)
+if (AppLuckSDK.isSDKInit()) {
+    if (AppLuckSDK.isPlacementReady(placementId)) {
+        // this: Current Activity
+        // placementId
+        // top: y-coordinate
+        // left: x-coordinate
+        // times: Default to 1
+        AppLuckSDK.showInteractiveEntrance(this, placementId, top, left, times);
+    }
+}
+
+// Get the view for self-display
+if (AppLuckSDK.isSDKInit()) {
+    if (AppLuckSDK.isPlacementReady(placementId)) {
+        LinearLayout llAddView = "{your Layout}";
+        // this: Current Activity
+        // placementId
+        // times: Default to 1
+        View iconView = AppLuckSDK.showInteractiveEntrance(this, placementId, 1);
+        // Display iconView
+        if (iconView != null) {
+            if (iconView.getParent() != null) {
+                ViewGroup viewGroup = (ViewGroup) iconView.getParent();
+                viewGroup.removeView(iconView);
+            }
+            iconView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            llAddView.addView(iconView);
+        }
+    }
+}
+  ```
+4. Hide Placement
+
+```java
+// activity - The activity where the entrance is located
+// placementId - Ad placement id
+AppLuckSDK.hideInteractiveEntrance(activity, placementId);
+  ```
+
+
+#### 4.2.2 Set up Entrance Manually
+
+- For scenes directly opening interactive ads, please call the following:
+
+```java
+if (AppLuckSDK.isSDKInit()) {
+    // Invoke the webview and load the activity, please pass in placementId
+    // mode 
+    //-- 0. Default mode: Suitable for fixed entrance scenes such as floating banner, users can freely close the interactive ad interface.
+    //-- 1. Interstitial mode: Suitable for interstitial scenes, users can close it after 10 seconds.
+    //-- 2. Reward mode: Suitable for reward scenes, users can close the interactive ad interface after participating in the activity {times} times, and closing the interface triggers the reward callback.
+    // times
+    //-- Used to limit the number of activity participations required by users when mode is 2 (reward mode).
+    AppLuckSDK.openInteractiveAds(placementId, mode, times);
 }
 ```
 
-- 自行设置入口，等待Appluck预加载完成再展示
+- Set up the entrance manually, wait for Appluck to preload before displaying
 
-### 4.3 其他事件
+### 4.3 Other Events
+
 ```java
 AppLuckSDK.setListener(new AppLuckSDK.AppLuckSDKListener() {
-	    //SDKInit 失败	
-            @Override
-            public void onInitFailed(Error error) {
-                Log.e("AppLuckSDK", "Init Failed.", error);
-                // Toast.makeText(MyApplication.this, "AppLuck SDK Init Failed.", Toast.LENGTH_SHORT).show();
-            }
-	    
-	    //AppLuck 关闭回调
-	    //status 0:普通关闭;1:已完成激励任务
-	    @Override
-            public void onInteractiveAdsHidden(String placementId, int i) {
-                
-            }
+    // SDK initialization failure    
+    @Override
+    public void onInitFailed(Error error) {
+        Log.e("AppLuckSDK", "Init Failed.", error);
+        // Toast.makeText(MyApplication.this, "AppLuck SDK Init Failed.", Toast.LENGTH_SHORT).show();
+    }
     
-        });
+    // AppLuck Close Callback
+    // status 0: Normal close; 1: Completed incentive task
+    @Override
+    public void onInteractiveAdsHidden(String placementId, int i) {
+        // Your code here
+    }
+});
 ```
 
 [alup]: https://github.com/jxsong1989/Appluck_SDK_Android/releases/tag/v1.2.2
